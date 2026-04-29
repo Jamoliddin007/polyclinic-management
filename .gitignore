@@ -1,0 +1,119 @@
+# ==========================================
+# Python
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# ==========================================
+# Virtual environments
+# ==========================================
+venv/
+env/
+ENV/
+.venv/
+.env/
+
+# ==========================================
+# Django
+# ==========================================
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+static_collected/
+
+# Migrations (faqat lokal — production'da kerak emas)
+# */migrations/*.py
+# !*/migrations/__init__.py
+
+# ==========================================
+# Environment variables (SECRETS!)
+# ==========================================
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# ==========================================
+# IDE / Editors
+# ==========================================
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ==========================================
+# Testing & coverage
+# ==========================================
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+coverage.xml
+*.cover
+
+# ==========================================
+# Node / React / Vite
+# ==========================================
+node_modules/
+.npm
+.yarn/
+dist/
+dist-ssr/
+.vite/
+*.local
+
+# Frontend build
+frontend/dist/
+frontend/build/
+
+# ==========================================
+# Docker
+# ==========================================
+*.pid
+docker-data/
+
+# ==========================================
+# OS
+# ==========================================
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+ehthumbs.db
+desktop.ini
+
+# ==========================================
+# Backups
+# ==========================================
+*.bak
+*.backup
+*.old
+*.orig
