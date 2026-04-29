@@ -1,0 +1,129 @@
+{
+  "info": {
+    "name": "Polyclinic Management API",
+    "description": "Pullik poliklinika boshqaruv tizimi REST API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [{ "key": "token", "value": "{{access_token}}", "type": "string" }]
+  },
+  "variable": [
+    { "key": "base_url",     "value": "http://localhost:8000/api" },
+    { "key": "access_token", "value": "" },
+    { "key": "refresh_token","value": "" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login (obtain JWT)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/auth/login/",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"admin\"\n}"
+            }
+          },
+          "event": [{
+            "listen": "test",
+            "script": { "exec": [
+              "const data = pm.response.json();",
+              "pm.collectionVariables.set('access_token',  data.access);",
+              "pm.collectionVariables.set('refresh_token', data.refresh);"
+            ]}
+          }]
+        },
+        {
+          "name": "Refresh token",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/auth/refresh/",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refresh\": \"{{refresh_token}}\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Patients",
+      "item": [
+        { "name": "List",   "request": { "method": "GET",  "url": "{{base_url}}/patients/patients/" } },
+        { "name": "Search", "request": { "method": "GET",  "url": "{{base_url}}/patients/patients/?search=Aliyev" } },
+        { "name": "Filter discount", "request": { "method": "GET", "url": "{{base_url}}/patients/patients/?discount_category=1" } },
+        { "name": "Detail", "request": { "method": "GET",  "url": "{{base_url}}/patients/patients/1/" } },
+        { "name": "Create",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/patients/patients/",
+            "body": { "mode": "raw", "raw": "{\n  \"full_name\": \"Test Bemor\",\n  \"birth_date\": \"1990-01-01\",\n  \"gender\": \"M\",\n  \"phone\": \"+998901234999\",\n  \"address\": \"Toshkent\",\n  \"discount_category\": null\n}" }
+          }
+        },
+        { "name": "Update", "request": { "method": "PATCH", "url": "{{base_url}}/patients/patients/1/", "body": { "mode": "raw", "raw": "{\"address\": \"Yangi manzil\"}" } } },
+        { "name": "Delete", "request": { "method": "DELETE","url": "{{base_url}}/patients/patients/1/" } },
+        { "name": "Discount categories", "request": { "method": "GET", "url": "{{base_url}}/patients/discount-categories/" } }
+      ]
+    },
+    {
+      "name": "Doctors",
+      "item": [
+        { "name": "List",        "request": { "method": "GET", "url": "{{base_url}}/doctors/doctors/" } },
+        { "name": "By specialty","request": { "method": "GET", "url": "{{base_url}}/doctors/doctors/?specialty=2" } },
+        { "name": "Detail",      "request": { "method": "GET", "url": "{{base_url}}/doctors/doctors/1/" } },
+        { "name": "Specialties", "request": { "method": "GET", "url": "{{base_url}}/doctors/specialties/" } },
+        { "name": "Qualifications","request": { "method": "GET", "url": "{{base_url}}/doctors/qualifications/" } }
+      ]
+    },
+    {
+      "name": "Visits",
+      "item": [
+        { "name": "List",  "request": { "method": "GET", "url": "{{base_url}}/visits/visits/" } },
+        { "name": "Pending only", "request": { "method": "GET", "url": "{{base_url}}/visits/visits/?payment_status=PENDING" } },
+        { "name": "Detail (with procedures)", "request": { "method": "GET", "url": "{{base_url}}/visits/visits/1/" } },
+        { "name": "Create with procedures",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/visits/visits/",
+            "body": { "mode": "raw", "raw": "{\n  \"patient\": 1,\n  \"primary_doctor\": 2,\n  \"visit_date\": \"2026-04-30\",\n  \"diagnosis\": \"Yurak shikoyatlari\",\n  \"procedures\": [\n    {\"procedure_type\": 1, \"quantity\": 1},\n    {\"procedure_type\": 7, \"quantity\": 1}\n  ]\n}" }
+          }
+        },
+        { "name": "Recalculate",  "request": { "method": "POST", "url": "{{base_url}}/visits/visits/1/recalculate/" } },
+        { "name": "Mark paid",    "request": { "method": "POST", "url": "{{base_url}}/visits/visits/1/mark_paid/" } },
+        { "name": "Cancel",       "request": { "method": "POST", "url": "{{base_url}}/visits/visits/1/cancel/" } },
+        { "name": "Procedure types","request": { "method": "GET", "url": "{{base_url}}/visits/procedure-types/" } }
+      ]
+    },
+    {
+      "name": "Billing",
+      "item": [
+        { "name": "Payments", "request": { "method": "GET", "url": "{{base_url}}/billing/payments/" } },
+        { "name": "Create payment",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/billing/payments/",
+            "body": { "mode": "raw", "raw": "{\n  \"visit\": 1,\n  \"amount\": 250000,\n  \"method\": \"CARD\"\n}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reports",
+      "item": [
+        { "name": "Dashboard KPI",          "request": { "method": "GET", "url": "{{base_url}}/reports/dashboard/" } },
+        { "name": "Revenue report",         "request": { "method": "GET", "url": "{{base_url}}/reports/revenue/" } },
+        { "name": "Top doctors",            "request": { "method": "GET", "url": "{{base_url}}/reports/top-doctors/" } },
+        { "name": "Specialty distribution", "request": { "method": "GET", "url": "{{base_url}}/reports/specialty-distribution/" } },
+        { "name": "Discount distribution",  "request": { "method": "GET", "url": "{{base_url}}/reports/discount-distribution/" } }
+      ]
+    }
+  ]
+}
