@@ -2,7 +2,7 @@
 
 Pullik poliklinikaning rejalashtirish xizmati uchun to'liq web-ilova. Bemorlarni ro'yxatga olish, shifokor murojaatlari, protseduralar, chegirmalar va to'lovlarni boshqaradi.
 
-> **Status:** 🚧 Ishlab chiqilmoqda (Bosqich 1/7)
+> **Status:** ✅ v1.0.0 — barcha bosqichlar yakunlangan
 
 ---
 
@@ -123,12 +123,27 @@ ER Diagram va schema [`docs/`](docs/) papkasida:
 ## 🗺 Roadmap
 
 - [x] **Bosqich 1:** Loyiha asosi va hujjatlashtirish
-- [ ] **Bosqich 2:** ER Diagram va MySQL schema
-- [ ] **Bosqich 3:** Django models va admin panel
-- [ ] **Bosqich 4:** REST API va biznes-mantiq
-- [ ] **Bosqich 5:** React frontend
-- [ ] **Bosqich 6:** Hisobotlar va analitika
-- [ ] **Bosqich 7:** Testlar, Docker, deploy
+- [x] **Bosqich 2:** ER Diagram va MySQL schema (+ sample data)
+- [x] **Bosqich 3:** Django models va admin panel
+- [x] **Bosqich 4:** REST API, JWT auth, rollar va Postman collection
+- [x] **Bosqich 5:** React + Vite + Tailwind frontend
+- [x] **Bosqich 6:** Dashboard, diagrammalar, PDF/Excel eksport
+- [x] **Bosqich 7:** Pytest + Vitest, Docker, GitHub Actions CI/CD
+
+## 📚 Hujjatlar
+
+- [`docs/USER_MANUAL.md`](docs/USER_MANUAL.md) — Foydalanuvchi qo'llanmasi
+- [`docs/postman_collection.json`](docs/postman_collection.json) — API testlar uchun
+
+## 🧪 Testlar
+
+```bash
+# Backend
+cd backend && pytest
+
+# Frontend
+cd frontend && npm test
+```
 
 ---
 
